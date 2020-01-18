@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "640913443308",
+    "firebase_url": "https://food-toxicity-scanner.firebaseio.com",
+    "project_id": "food-toxicity-scanner",
+    "storage_bucket": "food-toxicity-scanner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640913443308:android:705a51db1c45e1673658c9",
+        "android_client_info": {
+          "package_name": "com.cornhacks.foodtoxicityscanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640913443308-idfctkf6uejr98st1ql0fnql9fj0u61b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6hHKsoFqgg0sVYNm-oUCN25sjU2PNh5U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640913443308-idfctkf6uejr98st1ql0fnql9fj0u61b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
