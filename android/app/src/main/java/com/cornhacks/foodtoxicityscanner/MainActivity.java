@@ -42,6 +42,8 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
 import com.google.firebase.ml.vision.text.FirebaseVisionText;
 import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 import com.google.firebase.ml.vision.text.RecognizedLanguage;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -104,27 +106,10 @@ public class MainActivity extends AppCompatActivity {
                     public void onImageSaved(@NonNull File file) {
                         String msg = "Pic captured at " + file.getAbsolutePath();
                         Toast.makeText(getBaseContext(), msg, Toast.LENGTH_LONG).show();
-                        FirebaseVisionImage image;
-                        try {
-                            image = FirebaseVisionImage.fromFilePath(MainActivity.this, Uri.fromFile(file));
-                            FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
-                            Task<FirebaseVisionText> result = detector.processImage(image).addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
-                                                @Override
-                                                public void onSuccess(FirebaseVisionText firebaseVisionText) {
-                                                    Toast.makeText(getBaseContext(), firebaseVisionText.getText(), Toast.LENGTH_LONG).show();
-                                                }
-                                            })
-                                            .addOnFailureListener(
-                                                    new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            // Task failed with an exception
-                                                            // ...
-                                                        }
-                                                    });
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+
+                        // Crop
+                        CropImage.activity(Uri.fromFile(file))
+                                .start(MainActivity.this);
                     }
 
                     @Override
@@ -178,21 +163,38 @@ public class MainActivity extends AppCompatActivity {
         textureView.setTransform(mx);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
 
-
-    private int degreesToFirebaseRotation(int degrees) {
-        switch (degrees) {
-            case 0:
-                return FirebaseVisionImageMetadata.ROTATION_0;
-            case 90:
-                return FirebaseVisionImageMetadata.ROTATION_90;
-            case 180:
-                return FirebaseVisionImageMetadata.ROTATION_180;
-            case 270:
-                return FirebaseVisionImageMetadata.ROTATION_270;
-            default:
-                throw new IllegalArgumentException(
-                        "Rotation must be 0, 90, 180, or 270.");
+                // OCR Detection
+                FirebaseVisionImage image;
+                try {
+                    image = FirebaseVisionImage.fromFilePath(MainActivity.this, resultUri);
+                    FirebaseVisionTextRecognizer detector = FirebaseVision.getInstance().getOnDeviceTextRecognizer();
+                    Task<FirebaseVisionText> firebaseResult = detector.processImage(image).addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
+                        @Override
+                        public void onSuccess(FirebaseVisionText firebaseVisionText) {
+                            Toast.makeText(getBaseContext(), firebaseVisionText.getText(), Toast.LENGTH_LONG).show();
+                        }
+                    })
+                            .addOnFailureListener(
+                                    new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Task failed with an exception
+                                            // ...
+                                        }
+                                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+            }
         }
     }
 
