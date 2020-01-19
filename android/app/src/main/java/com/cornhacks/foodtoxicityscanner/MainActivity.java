@@ -167,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(FirebaseVisionText firebaseVisionText) {
                             Toast.makeText(getBaseContext(), firebaseVisionText.getText(), Toast.LENGTH_LONG).show();
+
                         }
                     })
                             .addOnFailureListener(
