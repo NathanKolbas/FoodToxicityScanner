@@ -181,11 +181,16 @@ public class MainActivity extends AppCompatActivity {
 
                             final List<Ingredient> ingredientsList = new ArrayList<>();
                             for (String ingredient : ingredients) {
+                                boolean foundItem = false;
                                 for (int i = 0; i < ToxicCheck.names.length; i++) {
                                     if (ToxicCheck.names[i].contains(ingredient)) {
                                         ingredientsList.add(new Ingredient(ingredient, ToxicCheck.description[i], ToxicCheck.safteyRating[i]));
+                                        foundItem = true;
                                         break;
                                     }
+                                }
+                                if (!foundItem) {
+                                    ingredientsList.add(new Ingredient(ingredient, "Currently unavailable", ToxicCheck.SAFTEY_RATINGS.UNAVAILABLE));
                                 }
                             }
 
@@ -216,6 +221,9 @@ public class MainActivity extends AppCompatActivity {
                                     case AVOID :
                                         ingredient.setTextColor(Color.RED);
                                         break;
+
+                                    default:
+                                        break;
                                 }
                                 ingredient.setId(i);
 
@@ -233,8 +241,7 @@ public class MainActivity extends AppCompatActivity {
                                                     public void onClick(DialogInterface dialog, int which) {
 
                                                     }
-                                                })
-                                                .setIcon(android.R.drawable.ic_dialog_alert);
+                                                });
                                         switch(rating) {
                                             case SAFE :
                                                 dialog.setIcon(R.drawable.safebig_0);
@@ -254,6 +261,9 @@ public class MainActivity extends AppCompatActivity {
 
                                             case AVOID :
                                                 dialog.setIcon(R.drawable.avoidbig);
+                                                break;
+
+                                            default:
                                                 break;
                                         }
                                         dialog.show();
