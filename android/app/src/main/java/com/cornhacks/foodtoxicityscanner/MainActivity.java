@@ -2,6 +2,7 @@ package com.cornhacks.foodtoxicityscanner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraX;
 import androidx.camera.core.ImageCapture;
@@ -13,8 +14,10 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +29,9 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,6 +45,8 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -166,7 +174,101 @@ public class MainActivity extends AppCompatActivity {
                     Task<FirebaseVisionText> firebaseResult = detector.processImage(image).addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
                         @Override
                         public void onSuccess(FirebaseVisionText firebaseVisionText) {
-                            Toast.makeText(getBaseContext(), firebaseVisionText.getText(), Toast.LENGTH_LONG).show();
+                            String allText = firebaseVisionText.getText().toUpperCase();
+
+                            String[] ingredients = allText.split(", ");
+                            ingredients[0] = ingredients[0].replace("INGREDIENTS: ", "");
+
+                            final List<Ingredient> ingredientsList = new ArrayList<>();
+                            for (String ingredient : ingredients) {
+                                for (int i = 0; i < ToxicCheck.names.length; i++) {
+                                    if (ToxicCheck.names[i].contains(ingredient)) {
+                                        ingredientsList.add(new Ingredient(ingredient, ToxicCheck.description[i], ToxicCheck.safteyRating[i]));
+                                        break;
+                                    }
+                                }
+                            }
+
+                            final ScrollView scrollView = findViewById(R.id.scrollView);
+                            final LinearLayout layout = (LinearLayout) findViewById(R.id.ingredientLayout);
+                            scrollView.setVisibility(View.VISIBLE);
+                            for (int i = 0; i < ingredientsList.size(); i++) {
+                                Button ingredient = new Button(MainActivity.this);
+                                ingredient.setText(ingredientsList.get(i).getName());
+                                final ToxicCheck.SAFTEY_RATINGS rating = ingredientsList.get(i).getSafteyRatings();
+                                switch(rating) {
+                                    case SAFE :
+                                        ingredient.setTextColor(Color.GREEN);
+                                        break;
+
+                                    case CAUTION :
+                                        ingredient.setTextColor(Color.parseColor("#FFA500"));
+                                        break;
+
+                                    case CUT :
+                                        ingredient.setTextColor(Color.YELLOW);
+                                        break;
+
+                                    case CPSA :
+                                        ingredient.setTextColor(Color.BLUE);
+                                        break;
+
+                                    case AVOID :
+                                        ingredient.setTextColor(Color.RED);
+                                        break;
+                                }
+                                ingredient.setId(i);
+
+                                layout.addView(ingredient);
+
+                                final String title = ingredientsList.get(i).getName();
+                                final String description = ingredientsList.get(i).getDescription();
+
+                                ingredient.setOnClickListener(new View.OnClickListener() {
+                                    public void onClick(View view) {
+                                        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this)
+                                                .setTitle(title)
+                                                .setMessage(description)
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int which) {
+
+                                                    }
+                                                })
+                                                .setIcon(android.R.drawable.ic_dialog_alert);
+                                        switch(rating) {
+                                            case SAFE :
+                                                dialog.setIcon(R.drawable.safebig_0);
+                                                break;
+
+                                            case CAUTION :
+                                                dialog.setIcon(R.drawable.cautionbig);
+                                                break;
+
+                                            case CUT :
+                                                dialog.setIcon(R.drawable.cutbig);
+                                                break;
+
+                                            case CPSA :
+                                                dialog.setIcon(R.drawable.certainbig);
+                                                break;
+
+                                            case AVOID :
+                                                dialog.setIcon(R.drawable.avoidbig);
+                                                break;
+                                        }
+                                        dialog.show();
+                                    }
+                                });
+                            }
+                            Button close = findViewById(R.id.closeButton);
+                            close.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    layout.removeAllViews();
+                                    scrollView.setVisibility(View.GONE);
+                                }
+                            });
+
 
                         }
                     })
