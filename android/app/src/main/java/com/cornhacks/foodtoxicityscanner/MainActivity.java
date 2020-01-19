@@ -181,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
 
                             final List<Ingredient> ingredientsList = new ArrayList<>();
                             for (String ingredient : ingredients) {
+                                ingredient = ingredient.replace(")", "").replace(".", "").replace("(", "");
                                 boolean foundItem = false;
                                 for (int i = 0; i < ToxicCheck.names.length; i++) {
                                     if (ToxicCheck.names[i].contains(ingredient)) {
