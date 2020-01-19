@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Food Toxicity Scanner</string>
+
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Hello Eating Healthy!</string>
+    <string name="slide_1_desc">A quick and easy way to learn about what ingredients are toxic in your food.</string>
+
+    <string name="slide_2_title">It\'s really easy!</string>
+    <string name="slide_2_desc">Simply take a photo of the ingredients label and crop the photo!</string>
+
+    <string name="slide_3_title">Ta Da!</string>
+    <string name="slide_3_desc">After we work a little bit of magic, the app will then tell you which ingredients you should avoid.</string>
 </resources>
