@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ingredient_id: 1
+  user_id: 1
+  name: MyString
+  description: MyString
+  safety_rating: 1
+
+two:
+  ingredient_id: 1
+  user_id: 1
+  name: MyString
+  description: MyString
+  safety_rating: 1

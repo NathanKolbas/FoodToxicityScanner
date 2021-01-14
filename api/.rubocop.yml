@@ -1,0 +1,11 @@
+Layout/EndOfLine:
+  EnforcedStyle: lf
+
+Layout/TrailingWhitespace:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
