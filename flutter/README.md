@@ -1,16 +1,45 @@
-# food_toxicity_scanner
+# Flutter
+Flutter is the front-end application for Food Toxicity Scanner. It will run on both Android and iOS. It has been tested on Android, however, since I do not have a Apple Developer account I am unable to test iOS. You can find the compiled Android apk in the [releases page](https://github.com/NathanKolbas/FoodToxicityScanner/releases).
 
-App that scans the ingredients label to tell you the safety of the ingredients
+## Structure
+The project structer follows the typical Flutter layout.
+* `/lib`  
+The main code for the project. This is where you will find the .dart files with logic and layout. main.dart is what is first ran when the application starts. Here are the subfloders and what they are for (mainly for orginization):  
 
-## Getting Started
+  * `/components`  
+  Used for flutter widgets that are used in multiple places throught the application.
 
-This project is a starting point for a Flutter application.
+  * `/controllers`  
+  Controllers are for the controllers (wow suprizing). It contains the api which is a library for communicating with the Ruby on Rails API.
 
-A few resources to get you started if this is your first Flutter project:
+  * `/models`  
+  Models are classes for how the data is structered (i.e. user).
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+  * `/screens`  
+  This is where you can find the different screens that the user can navigate to.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+* `/assets`  
+Assets such as the icon, images, and vectors.
+
+  * `/ic_launcher`  
+  The launcher icon.
+
+  * `/icons`  
+  SVG and vector icons.
+
+  * `/Images `  
+  Used to store images such as jpgs or pngs.
+
+* `/android`  
+Android specific code.
+
+* `/ios`  
+iOS specific code.
+
+* `/test`  
+TODO: For testing dart code.
+
+
+
+## Things to Note
+There is a quite a few things that can be cleaned up. Some of the screen constraints are from following online tutorials which is no longer needed. The camera screen should be plit into its own files. Testing **NEEDS** to be added. Since I did not have a lot of time for this project, testing was overlooked...
