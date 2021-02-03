@@ -9,12 +9,14 @@ The purpose of the application is to take a photo of the ingredients label of an
 The old code has been replaced with a new application developed by [Nathan Kolbas](https://github.com/NathanKolbas). It uses [Flutter](https://flutter.dev/) for the front end and [Ruby on Rails](https://rubyonrails.org/) for the backend.  
 
 ## Screenshots
-<img src="Assets/ScreenShots/Screenshot_20210130-173443.jpg" alt="icon" width="150"/>
-<img src="Assets/ScreenShots/Screenshot_20210130-173501.jpg" alt="icon" width="150"/>
-<img src="Assets/ScreenShots/Screenshot_20210130-173524.jpg" alt="icon" width="150"/>
-<img src="Assets/ScreenShots/Screenshot_20210130-173534.jpg" alt="icon" width="150"/>
-<img src="Assets/ScreenShots/Screenshot_20210130-173541.jpg" alt="icon" width="150"/>
-<img src="Assets/ScreenShots/Screenshot_20210130-173606.jpg" alt="icon" width="150"/>
+<p float="left">
+  <img src="Assets/ScreenShots/Screenshot_20210130-173443.jpg" alt="icon" width="150"/>
+  <img src="Assets/ScreenShots/Screenshot_20210130-173501.jpg" alt="icon" width="150"/>
+  <img src="Assets/ScreenShots/Screenshot_20210130-173524.jpg" alt="icon" width="150"/>
+  <img src="Assets/ScreenShots/Screenshot_20210130-173534.jpg" alt="icon" width="150"/>
+  <img src="Assets/ScreenShots/Screenshot_20210130-173541.jpg" alt="icon" width="150"/>
+  <img src="Assets/ScreenShots/Screenshot_20210130-173606.jpg" alt="icon" width="150"/>
+</p>
 
 ## Releases
 You can find demo releases on the projects [GitHub page](https://github.com/NathanKolbas/FoodToxicityScanner/releases). This will showcase both the api and application working. Current I can only build the Android application as I don't have an Apple developer account.
